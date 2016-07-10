@@ -5,7 +5,7 @@ jdk:
 
 before_install:
   - chmod +x gradlew
-  - pip install --user codecov
-
+script:
+  - ./gradlew build jacocoTestReport check
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
