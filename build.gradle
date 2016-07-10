@@ -35,17 +35,19 @@ dependencies {
     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.0-M1'
 }
 
-test {
-    testLogging {
-        events 'started', 'passed'
-    }
-}
-
 jacocoTestReport {
     reports {
         xml.enabled true
         html.enabled false
     }
+}
+
+
+test {
+    testLogging {
+        events 'started', 'passed'
+    }
+    finalizedBy jacocoTestReport
 }
 
 check.dependsOn jacocoTestReport
