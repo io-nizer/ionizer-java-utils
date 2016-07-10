@@ -91,6 +91,18 @@ public final class Array {
   }
 
   /**
+   * Intersection.
+   *
+   * @param first
+   * @param second
+   * @param <E>
+   * @return
+   */
+  public static <E> List<E> intersection(Collection<E> first, Collection<E> second) {
+    return first.stream().filter(second::contains).collect(Collectors.toList());
+  }
+
+  /**
    * Last.
    *
    * @param list

@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -46,8 +47,9 @@ public class ArrayTest {
     List<String> elements =
         IntStream.range(0, 10).boxed().map(i -> Integer.toString(i)).collect(Collectors.toList());
     List<? extends List<String>> result = Array.chunk(elements, 3);
-    Assertions.assertTrue(result.size() == 4);
-    Assertions.assertTrue(result.parallelStream().reduce((a, b) -> b).orElse(null).size() == 1);
+    Assertions.assertEquals(4, result.size());
+    List<String> lastChunk = result.parallelStream().reduce((a, b) -> b).orElse(null);
+    Assertions.assertEquals(1, lastChunk.size());
   }
 
   @Test public void givenCollectionOfTenElements_whenLast_thenGetLastElement() {
@@ -55,6 +57,14 @@ public class ArrayTest {
         IntStream.range(0, 10).boxed().map(i -> Integer.toString(i)).collect(Collectors.toList());
     String result = Array.last(elements);
     Assertions.assertEquals("9", result);
+  }
+
+  @Test public void givenTwoCollectionsWithOneCommonElement_whenIntersection_thenGetElementBack() {
+    List<String> first = Arrays.asList("1", "2", "3");
+    List<String> second = Arrays.asList("3", "4", "5");
+    List<String> result = Array.intersection(first, second);
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals("3", result.get(0));
   }
 
 }
