@@ -1,2 +1,2 @@
-# ionizer-java-utils
-Java 8 utility classes
+# ionizer-java-validation
+Java Bean Validation
